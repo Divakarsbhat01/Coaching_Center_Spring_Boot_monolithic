@@ -2,6 +2,7 @@ package com.coacen.coacen_mono.Service;
 
 import com.coacen.coacen_mono.Entity.User_Details;
 import com.coacen.coacen_mono.Entity.User_Id_Counter;
+import com.coacen.coacen_mono.Schemas.user_login_input;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface User_Details_Service {
     User_Details getUsers_byId(int userId) throws Exception;
 
     Boolean delete_user(int userId);
+
+    Boolean userlogin(user_login_input userLogibObj);
 }

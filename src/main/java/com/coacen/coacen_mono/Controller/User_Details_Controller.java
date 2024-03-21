@@ -1,6 +1,7 @@
 package com.coacen.coacen_mono.Controller;
 
 import com.coacen.coacen_mono.Entity.User_Details;
+import com.coacen.coacen_mono.Schemas.user_login_input;
 import com.coacen.coacen_mono.Service.User_Details_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,5 +54,23 @@ public class User_Details_Controller {
        }
        ab.put("Message","Id not found");
        return ab;
+    }
+
+    @PostMapping("/user_login")
+    public HashMap<String,String> abc(@RequestBody user_login_input user_logib_obj)
+    {
+        Boolean x=uds.userlogin(user_logib_obj);
+        HashMap<String,String>abcd=new HashMap<>();
+        if (x==Boolean.TRUE)
+        {
+            abcd.put("Message","Successful_Login");
+            return abcd;
+        }
+        else
+        {
+            abcd.put("Message","UnSuccessfult Login");
+            return abcd;
+        }
+
     }
 }

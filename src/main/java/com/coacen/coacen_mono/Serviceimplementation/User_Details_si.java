@@ -4,6 +4,7 @@ import com.coacen.coacen_mono.Entity.User_Details;
 import com.coacen.coacen_mono.Entity.User_Id_Counter;
 import com.coacen.coacen_mono.Repository.User_Credentials_Repository;
 import com.coacen.coacen_mono.Repository.User_Id_Counter_Repository;
+import com.coacen.coacen_mono.Schemas.user_login_input;
 import com.coacen.coacen_mono.Service.User_Details_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -76,5 +77,12 @@ public class User_Details_si implements User_Details_Service {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean userlogin(user_login_input userLogibObj)
+    {
+        Boolean x=udr.findById(userLogibObj.getId()).isPresent();
+        return x;
     }
 }
