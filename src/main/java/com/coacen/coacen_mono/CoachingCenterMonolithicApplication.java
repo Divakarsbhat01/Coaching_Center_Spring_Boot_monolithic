@@ -1,6 +1,6 @@
 package com.coacen.coacen_mono;
 
-import com.coacen.coacen_mono.Entity.User_Details;
+import com.coacen.coacen_mono.Entity.User;
 import com.coacen.coacen_mono.Repository.User_Credentials_Repository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

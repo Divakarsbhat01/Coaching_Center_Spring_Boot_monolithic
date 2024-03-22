@@ -1,6 +1,5 @@
 package com.coacen.coacen_mono.Repository;
 
-import com.coacen.coacen_mono.Entity.User_Details;
 import com.coacen.coacen_mono.Entity.User_Id_Counter;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

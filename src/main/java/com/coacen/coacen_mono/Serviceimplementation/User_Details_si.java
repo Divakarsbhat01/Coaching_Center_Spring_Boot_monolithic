@@ -1,18 +1,26 @@
 package com.coacen.coacen_mono.Serviceimplementation;
 
-import com.coacen.coacen_mono.Entity.User_Details;
+import com.coacen.coacen_mono.Configuration.ApplicationConfiguration;
+import com.coacen.coacen_mono.Configuration.JwtService;
+import com.coacen.coacen_mono.Controller.AuthenticationResponse;
+import com.coacen.coacen_mono.Entity.User;
 import com.coacen.coacen_mono.Entity.User_Id_Counter;
 import com.coacen.coacen_mono.Repository.User_Credentials_Repository;
 import com.coacen.coacen_mono.Repository.User_Id_Counter_Repository;
 import com.coacen.coacen_mono.Schemas.user_login_input;
 import com.coacen.coacen_mono.Service.User_Details_Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class User_Details_si implements User_Details_Service {
@@ -22,23 +30,33 @@ public class User_Details_si implements User_Details_Service {
     @Autowired
     User_Id_Counter_Repository uicr;
 
+    @Autowired
+    PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+
+    @Autowired
+    JwtService jwtService;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
     @Override
-    public User_Details save_user_details(User_Details udrb) {
+    public User save_user_details(User udrb) {
         User_Id_Counter ab=uicr.findById(1).get();
         int future_id=(ab.getUser_id_counter())+1;
         ab.setUser_id_counter(future_id);
         uicr.save(ab);
         udrb.setUserId(future_id);
+        udrb.setUserPassword(passwordEncoder.encode(udrb.getPassword()));
         udr.save(udrb);
         return udrb;
     }
 
     @Override
-    public User_Details userDetails_updateService(int userId, User_Details udrb) throws Exception {
+    public User userDetails_updateService(int userId, User udrb) throws Exception {
         Boolean check = udr.findById(userId).isPresent();
         if (check == Boolean.TRUE) {
-            User_Details x = udr.findById(userId).get();
-            x.setUserName(udrb.getUserName());
+            User x = udr.findById(userId).get();
+            x.setUserName(udrb.getUsername());
             x.setUserPassword(udrb.getUserPassword());
             x.setUserRole(udrb.getUserRole());
             udr.save(x);
@@ -50,16 +68,16 @@ public class User_Details_si implements User_Details_Service {
     }
 
     @Override
-    public List<User_Details> getallUsers() {
+    public List<User> getallUsers() {
         return udr.findAll();
     }
 
     @Override
-    public User_Details getUsers_byId(int userId) throws Exception {
+    public User getUsers_byId(int userId) throws Exception {
         Boolean check = udr.findById(userId).isPresent();
         if (check == Boolean.TRUE)
         {
-            User_Details x = udr.findById(userId).get();
+            User x = udr.findById(userId).get();
             return x;
         } else if (check == Boolean.FALSE)
         {
@@ -80,9 +98,15 @@ public class User_Details_si implements User_Details_Service {
     }
 
     @Override
-    public Boolean userlogin(user_login_input userLogibObj)
+    public String userlogin(user_login_input userLogibObj)
     {
-        Boolean x=udr.findById(userLogibObj.getId()).isPresent();
-        return x;
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                userLogibObj.getUsername(),userLogibObj.getPassword()
+        ));
+        User x=udr.findByuserName(userLogibObj.getUsername());
+        String token= jwtService.generateToken(x);
+        return token;
     }
+
+
 }
