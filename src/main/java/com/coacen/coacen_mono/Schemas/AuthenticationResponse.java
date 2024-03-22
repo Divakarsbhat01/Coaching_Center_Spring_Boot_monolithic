@@ -1,4 +1,4 @@
-package com.coacen.coacen_mono.Controller;
+package com.coacen.coacen_mono.Schemas;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,8 +1,6 @@
 package com.coacen.coacen_mono.Serviceimplementation;
 
-import com.coacen.coacen_mono.Configuration.ApplicationConfiguration;
 import com.coacen.coacen_mono.Configuration.JwtService;
-import com.coacen.coacen_mono.Controller.AuthenticationResponse;
 import com.coacen.coacen_mono.Entity.User;
 import com.coacen.coacen_mono.Entity.User_Id_Counter;
 import com.coacen.coacen_mono.Repository.User_Credentials_Repository;
@@ -10,12 +8,8 @@ import com.coacen.coacen_mono.Repository.User_Id_Counter_Repository;
 import com.coacen.coacen_mono.Schemas.user_login_input;
 import com.coacen.coacen_mono.Service.User_Details_Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
