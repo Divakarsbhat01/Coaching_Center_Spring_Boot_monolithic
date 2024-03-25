@@ -25,7 +25,7 @@ public class SecurityConfiguration_filterbinding
     {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/UserDetails_Create","/user_login")
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/UserDetails_Create","/user_login","/status")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
