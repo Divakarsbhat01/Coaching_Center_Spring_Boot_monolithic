@@ -24,8 +24,9 @@ public class Student
     private String student_last_name;
     private String email_id;
     private int student_age;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parent_id",referencedColumnName = "parent_id")
+    private int parent_id;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "parent_id",insertable = false,updatable = false,referencedColumnName = "parent_id")
     private Parent parent;
 
     @ManyToMany(cascade = CascadeType.ALL)
