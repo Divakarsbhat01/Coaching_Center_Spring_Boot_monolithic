@@ -27,20 +27,27 @@ public class ApplicationConfiguration
     public AuthenticationProvider authenticationProvider()
     {
         DaoAuthenticationProvider authProvider=new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
+/*
+Authentication Manager on receiving username and password calls authentication
+provider to validate if the username and password is valid or not.
+Provider takes USerDetais service object and password encoder object,
+does authentication and returns it
+*/
     @Bean
     PasswordEncoder passwordEncoder()
     {
         return new BCryptPasswordEncoder();
     }
-
+// to encode passwords
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
     {
         return config.getAuthenticationManager();
     }
+//Authentication Manager to call authentication provider, manager used in user details service
 
 }

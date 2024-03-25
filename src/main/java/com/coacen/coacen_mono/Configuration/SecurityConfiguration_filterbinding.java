@@ -34,6 +34,6 @@ public class SecurityConfiguration_filterbinding
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class);
         return http.build();
-
     }
 }
+//User for Binding my custom filter to the normal filterchain and to define rules

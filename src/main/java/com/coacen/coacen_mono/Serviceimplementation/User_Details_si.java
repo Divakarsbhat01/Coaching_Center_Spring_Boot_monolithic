@@ -97,10 +97,17 @@ public class User_Details_si implements User_Details_Service {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userLogibObj.getUsername(),userLogibObj.getPassword()
         ));
+/*
+authenticate the user using authentication manager it redirects internally
+to authentication provider which obtains USerDetails through which it access
+JPA repository gets username and password and authenticates it with user
+provided authentication and password
+*/
         User x=udr.findByuserName(userLogibObj.getUsername());
+//here map the login details with USer object
         String token= jwtService.generateToken(x);
+// pass user object to method in jwt service to generate token
         return token;
+//return token to controller
     }
-
-
 }

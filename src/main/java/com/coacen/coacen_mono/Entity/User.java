@@ -22,12 +22,11 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "user_details")
 /*
-This User class that i have created for user information it extends to User Details
-because spring can only understand and works with UserDetails class,hence i am extending
-to it and implementing all its implemented methods, attaching my user class variables
-with USer Details is done throough returning the data, for USer roles create a new enum
-in same package and datatype for userRole is Role, Have 2 roles ADMIN and USER and
-other things like account locked etc return true
+1. The User class contains fields for user identification fields
+2. This user class is not understood by Spring boot's Security
+3. Therefore i am attaching this class with UserDetails this is understood by SpringBoot Security
+4.implementing its methods
+5. making sure that all its implemented methods return proper values
  */
 public class User implements UserDetails
 {
