@@ -1,11 +1,12 @@
 package com.coacen.coacen_mono.Controller;
 
 import com.coacen.coacen_mono.Entity.User;
+import com.coacen.coacen_mono.Schemas.User_return;
 import com.coacen.coacen_mono.Schemas.user_login_input;
 import com.coacen.coacen_mono.Service.User_Details_Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,38 +26,38 @@ public class User_Details_Controller {
     }
 
     @PostMapping("/UserDetails_Create")
-    public User get_user_details(@RequestBody User udrb) {
+    public ResponseEntity<User_return> get_user_details(@RequestBody User udrb) {
 
-        return uds.save_user_details(udrb);
+        return ResponseEntity.status(HttpStatus.CREATED).body(uds.save_user_details(udrb));
     }
 
     @PostMapping("/UserDetails_Update/{id}")
-    public User update_user_details(@RequestBody User udrb, @PathVariable("id") int User_id) throws Exception {
-        return uds.userDetails_updateService(User_id,udrb);
+    public ResponseEntity<User> update_user_details(@RequestBody User udrb, @PathVariable("id") int User_id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(uds.userDetails_updateService(User_id,udrb));
     }
     @GetMapping("/get_all_users")
-    public List<User> getting_all_users()
+    public ResponseEntity<List<User>> getting_all_users()
     {
-        return uds.getallUsers();
+        return ResponseEntity.status(HttpStatus.OK).body(uds.getallUsers());
     }
 
     @GetMapping("/get_users_byId/{id}")
-    public User getting_all_users(@PathVariable("id") int user_id) throws Exception
+    public ResponseEntity<User> getting_all_users(@PathVariable("id") int user_id) throws Exception
     {
-        return uds.getUsers_byId(user_id);
+        return ResponseEntity.status(HttpStatus.OK).body(uds.getUsers_byId(user_id));
     }
     @DeleteMapping("/delete_user/{id}")
-    public HashMap<String,String> delete_given_user(@PathVariable("id") int user_id)throws Exception
+    public ResponseEntity<HashMap<String,String>> delete_given_user(@PathVariable("id") int user_id)throws Exception
     {
        Boolean x=uds.delete_user(user_id);
        HashMap<String,String> ab=new HashMap<>();
        if (x==Boolean.TRUE)
        {
            ab.put("Message","Success");
-           return ab;
+           return ResponseEntity.status(HttpStatus.OK).body(ab);
        }
        ab.put("Message","Id not found");
-       return ab;
+        return ResponseEntity.status(HttpStatus.OK).body(ab);
     }
 
     @PostMapping("/user_login")

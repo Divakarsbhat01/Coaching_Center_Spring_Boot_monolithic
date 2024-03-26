@@ -14,10 +14,11 @@ public class Course_Material
 {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
-    private String course_material_id;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_id",referencedColumnName = "course_id")
-    private Course course;
+    private int course_material_id;
+    private int course_id;
     private String course_url;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id",referencedColumnName = "course_id",insertable = false,updatable = false)
+    private Course course;
+
 }

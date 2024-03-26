@@ -1,6 +1,7 @@
 package com.coacen.coacen_mono.Service;
 
 import com.coacen.coacen_mono.Entity.Parent;
+import com.coacen.coacen_mono.Error_Control.Exceptions.parentNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface Parent_Service
 
     List<Parent> get_all_parents();
 
-    Optional<Parent> get_parent_byId(int parent_id);
+    Optional<Parent> get_parent_byId(int parent_id) throws parentNotFoundException;
 
     Parent update_parent_by_id(int parentId,Parent parent) throws Exception;
 

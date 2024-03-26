@@ -1,6 +1,7 @@
 package com.coacen.coacen_mono.Service;
 
 import com.coacen.coacen_mono.Entity.Teacher;
+import com.coacen.coacen_mono.Error_Control.Exceptions.teacherNotFoundException;
 import com.coacen.coacen_mono.Schemas.Teacher_return;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ public interface Teacher_Service
 
     List<Teacher> get_all_teachers();
 
-    Optional<Teacher> get_teacher_byId(int teacherId);
+    Optional<Teacher> get_teacher_byId(int teacherId) throws teacherNotFoundException;
 
-    Teacher update_teacher_by_id(int teacherId, Teacher teacher) throws Exception;
+    Teacher_return update_teacher_by_id(int teacherId, Teacher teacher) throws Exception;
 
     Boolean delete_teacher_by_id(int teacherId);
 }

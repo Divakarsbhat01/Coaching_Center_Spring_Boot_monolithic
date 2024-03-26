@@ -3,8 +3,10 @@ package com.coacen.coacen_mono.Serviceimplementation;
 import com.coacen.coacen_mono.Configuration.JwtService;
 import com.coacen.coacen_mono.Entity.User;
 import com.coacen.coacen_mono.Entity.User_Id_Counter;
+import com.coacen.coacen_mono.Error_Control.Exceptions.userNotFoundException;
 import com.coacen.coacen_mono.Repository.User_Credentials_Repository;
 import com.coacen.coacen_mono.Repository.User_Id_Counter_Repository;
+import com.coacen.coacen_mono.Schemas.User_return;
 import com.coacen.coacen_mono.Schemas.user_login_input;
 import com.coacen.coacen_mono.Service.User_Details_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class User_Details_si implements User_Details_Service {
     AuthenticationManager authenticationManager;
 
     @Override
-    public User save_user_details(User udrb) {
+    public User_return save_user_details(User udrb) {
         User_Id_Counter ab=uicr.findById(1).get();
         int future_id=(ab.getUser_id_counter())+1;
         ab.setUser_id_counter(future_id);
@@ -42,53 +44,66 @@ public class User_Details_si implements User_Details_Service {
         udrb.setUserId(future_id);
         udrb.setUserPassword(passwordEncoder.encode(udrb.getPassword()));
         udr.save(udrb);
-        return udrb;
+        User_return ur=new User_return();
+        ur.setRole(String.valueOf(udrb.getUserRole()));
+        ur.setUsername(udrb.getUsername());
+        ur.setUser_id(udrb.getUserId());
+        return ur;
     }
 
     @Override
-    public User userDetails_updateService(int userId, User udrb) throws Exception {
+    public User userDetails_updateService(int userId, User udrb) throws Exception
+    {
         Boolean check = udr.findById(userId).isPresent();
-        if (check == Boolean.TRUE) {
+        if (check == Boolean.TRUE)
+        {
             User x = udr.findById(userId).get();
             x.setUserName(udrb.getUsername());
             x.setUserPassword(udrb.getUserPassword());
             x.setUserRole(udrb.getUserRole());
             udr.save(x);
             return x;
-        } else if (check == Boolean.FALSE) {
-            throw new Exception("The Requested id is not Available");
+        } else if (check == Boolean.FALSE)
+        {
+            throw new userNotFoundException("UserId not Found");
         }
         return udrb;
     }
 
     @Override
-    public List<User> getallUsers() {
+    public List<User> getallUsers()
+    {
         return udr.findAll();
     }
 
     @Override
-    public User getUsers_byId(int userId) throws Exception {
+    public User getUsers_byId(int userId) throws Exception
+    {
         Boolean check = udr.findById(userId).isPresent();
         if (check == Boolean.TRUE)
         {
             User x = udr.findById(userId).get();
             return x;
-        } else if (check == Boolean.FALSE)
-        {
-            throw new Exception("The Requested id is not Available");
         }
-        return null;
+        else
+        {
+            throw new userNotFoundException("UserId not Found");
+        }
     }
 
     @Override
-    public Boolean delete_user(int userId) {
+    public Boolean delete_user(int userId) throws userNotFoundException {
         Boolean x=udr.findById(userId).isPresent();
         if (x==Boolean.TRUE)
         {
             udr.deleteById(userId);
             return Boolean.TRUE;
         }
-        return Boolean.FALSE;
+        else
+        {
+            throw new userNotFoundException("UserId not Found");
+        }
+
     }
 
     @Override

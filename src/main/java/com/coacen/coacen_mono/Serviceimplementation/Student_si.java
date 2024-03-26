@@ -1,6 +1,7 @@
 package com.coacen.coacen_mono.Serviceimplementation;
 
 import com.coacen.coacen_mono.Entity.Student;
+import com.coacen.coacen_mono.Error_Control.Exceptions.studentNotFoundException;
 import com.coacen.coacen_mono.Repository.Student_Repository;
 import com.coacen.coacen_mono.Schemas.Student_return;
 import com.coacen.coacen_mono.Service.Student_Service;
@@ -29,21 +30,39 @@ public class Student_si implements Student_Service
         return studentReturn;
     }
 
-    public List<Student> get_all_students() {
+    public List<Student> get_all_students()
+    {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> get_student_byId(int student_id) {
-        return studentRepository.findById(student_id);
+    public Optional<Student> get_student_byId(int student_id) throws studentNotFoundException {
+        if(studentRepository.findById(student_id).isPresent())
+        {
+            return Optional.of(studentRepository.findById(student_id).get());
+        }
+        else
+        {
+            throw new studentNotFoundException("Student Id not Found");
+        }
     }
 
     @Override
     public Student update_student_by_id(int studentId, Student student) throws Exception {
         if(studentRepository.findById(studentId).isPresent())
         {
-            return studentRepository.save(student);
+            Student x=studentRepository.getReferenceById(studentId);
+            x.setStudent_id(student.getStudent_id());
+            x.setStudent_age(student.getStudent_age());
+            x.setStudent_first_name(student.getStudent_first_name());
+            x.setStudent_last_name(student.getStudent_last_name());
+            x.setEmail_id(student.getEmail_id());
+            x.setParent_id(student.getParent_id());
+            return studentRepository.save(x);
         }
-        throw new Exception("The user is not present");
+        else
+        {
+            throw new studentNotFoundException("Student Id not Found");
+        }
     }
 
     @Override

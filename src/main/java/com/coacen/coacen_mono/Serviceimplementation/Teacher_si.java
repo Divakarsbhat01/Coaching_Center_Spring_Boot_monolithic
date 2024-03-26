@@ -1,9 +1,8 @@
 package com.coacen.coacen_mono.Serviceimplementation;
 
-import com.coacen.coacen_mono.Entity.Student;
 import com.coacen.coacen_mono.Entity.Teacher;
+import com.coacen.coacen_mono.Error_Control.Exceptions.teacherNotFoundException;
 import com.coacen.coacen_mono.Repository.Teacher_Repository;
-import com.coacen.coacen_mono.Schemas.Student_return;
 import com.coacen.coacen_mono.Schemas.Teacher_return;
 import com.coacen.coacen_mono.Service.Teacher_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +35,38 @@ public class Teacher_si implements Teacher_Service
     }
 
     @Override
-    public Optional<Teacher> get_teacher_byId(int teacherId)
-    {
-        return teacherRepository.findById(teacherId);
+    public Optional<Teacher> get_teacher_byId(int teacherId) throws teacherNotFoundException {
+        if(teacherRepository.findById(teacherId).isPresent())
+        {
+            return teacherRepository.findById(teacherId);
+        }
+        else
+        {
+            throw new teacherNotFoundException("TeacherId not found");
+        }
     }
 
     @Override
-    public Teacher update_teacher_by_id(int teacherId, Teacher teacher) throws Exception {
+    public Teacher_return update_teacher_by_id(int teacherId, Teacher teacher) throws Exception
+    {
         if(teacherRepository.findById(teacherId).isPresent())
         {
-            return teacherRepository.save(teacher);
+            Teacher x=teacherRepository.getReferenceById(teacherId);
+            x.setTeacher_email(teacher.getTeacher_email());
+            x.setTeacher_first_name(teacher.getTeacher_first_name());
+            x.setTeacher_last_name(teacher.getTeacher_last_name());
+            teacherRepository.save(x);
+            Teacher_return teacherReturn=new Teacher_return();
+            teacherReturn.setTeacher_id(x.getTeacher_id());
+            teacherReturn.setTeacher_email(x.getTeacher_email());
+            teacherReturn.setTeacher_first_name(x.getTeacher_first_name());
+            teacherReturn.setTeacher_last_name(x.getTeacher_last_name());
+            return teacherReturn;
         }
-        throw new Exception("The user is not present");
+        else
+        {
+            throw new teacherNotFoundException("TeacherId not found");
+        }
     }
 
     @Override
