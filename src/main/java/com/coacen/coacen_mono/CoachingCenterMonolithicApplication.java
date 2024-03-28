@@ -10,7 +10,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 
 @SpringBootApplication
-public class CoachingCenterMonolithicApplication {
+public class CoachingCenterMonolithicApplication
+{
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoachingCenterMonolithicApplication.class, args);

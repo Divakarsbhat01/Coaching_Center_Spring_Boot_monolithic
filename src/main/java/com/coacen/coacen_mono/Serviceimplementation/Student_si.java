@@ -30,11 +30,10 @@ public class Student_si implements Student_Service
         return studentReturn;
     }
 
-    public List<Student> get_all_students()
-    {
+    @Override
+    public List<Student> get_all_students() {
         return studentRepository.findAll();
     }
-
     public Optional<Student> get_student_byId(int student_id) throws studentNotFoundException {
         if(studentRepository.findById(student_id).isPresent())
         {

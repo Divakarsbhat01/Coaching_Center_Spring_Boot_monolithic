@@ -22,9 +22,10 @@ public class Course
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int course_id;
 
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.ALL)
+
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private Set<Student>students;
 
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.MERGE)
     private Set<Teacher>teachers;
 }
