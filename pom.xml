@@ -11,7 +11,7 @@
 	<groupId>com.coacen</groupId>
 	<artifactId>coacen_mono</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Coaching_Center_monolithic</name>
+	<name>coacenmonospringboot</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
