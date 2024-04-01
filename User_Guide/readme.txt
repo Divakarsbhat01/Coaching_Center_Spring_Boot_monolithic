@@ -10,7 +10,7 @@ Mongo DB
         user_id:1
     create collection with name user_id_counter
     data has to be in format:
-        user_id_counter:6
+        user_id_counter:1
         counter_name:"user_id_counter"
 MysqlDB
     create a databases in mysql db with name coaching_center_springboot_monolithic
