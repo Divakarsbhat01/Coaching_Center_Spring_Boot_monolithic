@@ -14,9 +14,9 @@ public interface Course_Material_Service
 
     Course_Material_return create_course(Course_Material courseMaterial);
 
-    List<Course_Material> get_all_courses();
+    List<Course_Material_return> get_all_courses();
 
-    Optional<Course_Material> get_course_byId(int courseMaterialId) throws courseMaterialNotFoundException;
+    Course_Material_return get_course_byId(int courseMaterialId) throws courseMaterialNotFoundException;
 
     Course_Material_return update_course_material_by_id(int courseMaterialId, Course_Material courseMaterial) throws Exception;
 

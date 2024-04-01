@@ -8,6 +8,7 @@ import com.coacen.coacen_mono.Schemas.Course_Material_return;
 import com.coacen.coacen_mono.Service.Course_Material_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public class Course_Material_si implements Course_Material_Service
     @Autowired
     Course_Material_Repository courseMaterialRepository;
 
+    @Transactional
     @Override
     public Course_Material_return create_course(Course_Material courseMaterial)
     {
@@ -27,24 +29,22 @@ public class Course_Material_si implements Course_Material_Service
     }
 
     @Override
-    public List<Course_Material> get_all_courses()
+    public List<Course_Material_return> get_all_courses()
     {
-        return courseMaterialRepository.findAll();
+        return courseMaterialRepository.return_all_coursematerials();
     }
 
     @Override
-    public Optional<Course_Material> get_course_byId(int courseMaterialId) throws courseMaterialNotFoundException {
+    public Course_Material_return get_course_byId(int courseMaterialId) throws courseMaterialNotFoundException {
         if(courseMaterialRepository.findById(courseMaterialId).isPresent())
         {
-            return courseMaterialRepository.findById(courseMaterialId);
-
-
+            Course_Material_return cmr=new Course_Material_return(courseMaterialRepository.findById(courseMaterialId).get());
+            return cmr;
         }
         else
         {
          throw new courseMaterialNotFoundException("Course Material not found");
         }
-
     }
 
     @Override
@@ -58,7 +58,6 @@ public class Course_Material_si implements Course_Material_Service
             courseMaterialRepository.save(x);
             Course_Material_return xx=new Course_Material_return(x);
             return xx;
-
         }
         else
         {

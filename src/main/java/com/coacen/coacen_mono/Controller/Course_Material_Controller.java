@@ -24,13 +24,14 @@ public class Course_Material_Controller
         return ResponseEntity.status(HttpStatus.CREATED).body(courseMaterialService.create_course(courseMaterial));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all_courses_material")
-    public ResponseEntity<List<Course_Material>> get_all_course_materials()
+    public ResponseEntity<List<Course_Material_return>> get_all_course_materials()
     {
         return ResponseEntity.status(HttpStatus.OK).body(courseMaterialService.get_all_courses());
     }
     @GetMapping("/courses_material_byid/{id}")
-    public ResponseEntity<Optional<Course_Material>> get_all_course_materials(@PathVariable("id") int course_material_id) throws courseMaterialNotFoundException {
+    public ResponseEntity<Course_Material_return> get_all_course_materials(@PathVariable("id") int course_material_id) throws courseMaterialNotFoundException {
 
         return ResponseEntity.status(HttpStatus.OK).body(courseMaterialService.get_course_byId(course_material_id));
     }

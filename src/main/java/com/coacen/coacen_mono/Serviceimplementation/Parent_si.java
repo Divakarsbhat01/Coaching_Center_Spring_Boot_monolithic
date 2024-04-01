@@ -3,6 +3,7 @@ package com.coacen.coacen_mono.Serviceimplementation;
 import com.coacen.coacen_mono.Entity.Parent;
 import com.coacen.coacen_mono.Error_Control.Exceptions.parentNotFoundException;
 import com.coacen.coacen_mono.Repository.Parent_Repository;
+import com.coacen.coacen_mono.Schemas.parent_return;
 import com.coacen.coacen_mono.Service.Parent_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,5 +67,9 @@ public class Parent_si implements Parent_Service
         else {
             return Boolean.FALSE;
         }
+    }
+    public List<parent_return> return_all_parents()
+    {
+        return parentRepository.returnAllParents();
     }
 }

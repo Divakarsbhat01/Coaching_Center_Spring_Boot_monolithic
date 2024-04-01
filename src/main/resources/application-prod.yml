@@ -1,0 +1,28 @@
+spring:
+  flyaway:
+    baseline-version: '0'
+    password: password
+    baseline-description: '"init"'
+    user: root
+    enabled: 'true'
+    baseline-on-migrate: 'true'
+  application:
+    name: Coaching_Center_monolithic
+  data:
+    mongodb:
+      port: '27017'
+      host: localhost
+      database: users_sb
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+    properties:
+      hibernate:
+        default_schema: coaching_center_springboot_monolithic
+        format_sql: 'true'
+  datasource:
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/coaching_center_springboot_monolithic

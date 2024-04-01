@@ -2,6 +2,7 @@ package com.coacen.coacen_mono.Service;
 
 import com.coacen.coacen_mono.Entity.Parent;
 import com.coacen.coacen_mono.Error_Control.Exceptions.parentNotFoundException;
+import com.coacen.coacen_mono.Schemas.parent_return;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface Parent_Service
     Parent update_parent_by_id(int parentId,Parent parent) throws Exception;
 
     Boolean delete_parent_by_id(int parentId);
+    List<parent_return> return_all_parents();
 }

@@ -23,7 +23,7 @@ public class Course
     private int course_id;
 
 
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "courses",cascade = CascadeType.MERGE)
     private Set<Student>students;
 
     @ManyToMany(mappedBy = "courses",cascade = CascadeType.MERGE)

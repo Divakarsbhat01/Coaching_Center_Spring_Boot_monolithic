@@ -2,6 +2,7 @@ package com.coacen.coacen_mono.Controller;
 
 import com.coacen.coacen_mono.Entity.Parent;
 import com.coacen.coacen_mono.Error_Control.Exceptions.parentNotFoundException;
+import com.coacen.coacen_mono.Schemas.parent_return;
 import com.coacen.coacen_mono.Service.Parent_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,5 +55,11 @@ public class Parent_Controller
             ab.put("Message","Delete UnSuccessful");
             return ResponseEntity.status(HttpStatus.OK).body(ab);
         }
+    }
+
+    @GetMapping("/parret")
+    public List<parent_return> ret_all_parent()
+    {
+        return parentService.return_all_parents();
     }
 }

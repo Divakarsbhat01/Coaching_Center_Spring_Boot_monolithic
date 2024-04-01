@@ -17,7 +17,7 @@ public class Course_Material
     private int course_material_id;
     private int course_id;
     private String course_url;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id",referencedColumnName = "course_id",insertable = false,updatable = false)
     private Course course;
 
