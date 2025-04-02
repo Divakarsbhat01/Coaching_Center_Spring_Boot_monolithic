@@ -25,12 +25,12 @@ public class Teacher_Controller
     }
 
     @GetMapping("/all_teachers")
-    public ResponseEntity<List<Teacher>> get_all_teachers()
+    public ResponseEntity<List<Teacher_return>> get_all_teachers()
     {
         return ResponseEntity.status(HttpStatus.OK).body(teacherService.get_all_teachers());
     }
     @GetMapping("/teachers_by_id/{id}")
-    public ResponseEntity<Optional<Teacher>> get_all_teachers(@PathVariable("id") int teacher_id) throws teacherNotFoundException {
+    public ResponseEntity<Teacher_return> get_all_teachers(@PathVariable("id") int teacher_id) throws teacherNotFoundException {
 
         return ResponseEntity.status(HttpStatus.OK).body(teacherService.get_teacher_byId(teacher_id));
     }

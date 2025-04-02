@@ -14,9 +14,9 @@ public interface Teacher_Service
 
     Teacher_return create_teacher(Teacher teacher);
 
-    List<Teacher> get_all_teachers();
+    List<Teacher_return> get_all_teachers();
 
-    Optional<Teacher> get_teacher_byId(int teacherId) throws teacherNotFoundException;
+    Teacher_return get_teacher_byId(int teacherId) throws teacherNotFoundException;
 
     Teacher_return update_teacher_by_id(int teacherId, Teacher teacher) throws Exception;
 

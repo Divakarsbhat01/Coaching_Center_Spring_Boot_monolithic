@@ -6,7 +6,11 @@ import com.coacen.coacen_mono.Repository.Teacher_Repository;
 import com.coacen.coacen_mono.Schemas.Teacher_return;
 import com.coacen.coacen_mono.Service.Teacher_Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +20,8 @@ public class Teacher_si implements Teacher_Service
 {
     @Autowired
     Teacher_Repository teacherRepository;
+
+    @CacheEvict(value = {"getListOfAllTeachers","getListOfTeachersById"},allEntries = true)
     @Override
     public Teacher_return create_teacher(Teacher teacher)
     {
@@ -28,17 +34,21 @@ public class Teacher_si implements Teacher_Service
         return teacherReturn;
     }
 
+    @Cacheable(value = "getListOfAllTeachers")
     @Override
-    public List<Teacher> get_all_teachers()
+    public List<Teacher_return> get_all_teachers()
     {
-        return teacherRepository.findAll();
+        return teacherRepository.getAllTeachers();
     }
 
+    @Cacheable(value = "getListOfTeachersById")
+    @Transactional
     @Override
-    public Optional<Teacher> get_teacher_byId(int teacherId) throws teacherNotFoundException {
+    public Teacher_return get_teacher_byId(int teacherId) throws teacherNotFoundException {
         if(teacherRepository.findById(teacherId).isPresent())
         {
-            return teacherRepository.findById(teacherId);
+            Teacher_return tr=new Teacher_return(teacherRepository.findById(teacherId).get());
+            return tr;
         }
         else
         {
@@ -46,6 +56,8 @@ public class Teacher_si implements Teacher_Service
         }
     }
 
+    @CachePut(value ={"getListOfAllTeachers","getListOfTeachersById"})
+    @Transactional
     @Override
     public Teacher_return update_teacher_by_id(int teacherId, Teacher teacher) throws Exception
     {
@@ -69,6 +81,8 @@ public class Teacher_si implements Teacher_Service
         }
     }
 
+    @CacheEvict(value = {"getListOfAllTeachers","getListOfTeachersById"},allEntries = true)
+    @Transactional
     @Override
     public Boolean delete_teacher_by_id(int teacherId)
     {
