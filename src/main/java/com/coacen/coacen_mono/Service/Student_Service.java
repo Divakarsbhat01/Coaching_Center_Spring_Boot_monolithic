@@ -12,11 +12,11 @@ import java.util.Optional;
 public interface Student_Service{
     Student_return create_student(Student student);
 
-    List<Student> get_all_students();
+    List<Student_return> get_all_students();
 
-    Optional<Student> get_student_byId(int studentId) throws studentNotFoundException;
+    Student_return get_student_byId(int studentId) throws studentNotFoundException;
 
-    Student update_student_by_id(int studentId, Student student) throws Exception;
+    Student_return update_student_by_id(int studentId, Student student) throws Exception;
 
     Boolean delete_student_by_id(int studentId);
 }

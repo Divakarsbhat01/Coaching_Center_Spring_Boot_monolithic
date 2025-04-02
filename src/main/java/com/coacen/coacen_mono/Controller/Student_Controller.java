@@ -25,17 +25,17 @@ public class Student_Controller
     }
 
     @GetMapping("/all_students")
-    public ResponseEntity<List<Student>> get_all_students()
+    public ResponseEntity<List<Student_return>> get_all_students()
     {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.get_all_students());
     }
     @GetMapping("/students_by_id/{id}")
-    public ResponseEntity<Optional<Student>> get_all_students(@PathVariable("id") int student_id) throws studentNotFoundException {
+    public ResponseEntity<Student_return> get_all_students(@PathVariable("id") int student_id) throws studentNotFoundException {
 
         return ResponseEntity.status(HttpStatus.OK).body(studentService.get_student_byId(student_id));
     }
     @PutMapping("/update_student/{id}")
-    public ResponseEntity<Student> update_student_by_id(@PathVariable ("id") int student_id,@RequestBody Student student) throws Exception {
+    public ResponseEntity<Student_return> update_student_by_id(@PathVariable ("id") int student_id,@RequestBody Student student) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.update_student_by_id(student_id,student));
     }
     @DeleteMapping("/delete_student/{id}")
