@@ -25,12 +25,12 @@ public class Course_Controller
     }
 
     @GetMapping("/all_courses")
-    public ResponseEntity<List<Course>> get_all_courses()
+    public ResponseEntity<List<Course_Return>> get_all_courses()
     {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.get_all_courses());
     }
     @GetMapping("/courses_by_id/{id}")
-    public ResponseEntity<Optional<Course>> get_all_courses(@PathVariable("id") int course_id) throws courseNotFoundException {
+    public ResponseEntity<Course_Return> get_the_courses(@PathVariable("id") int course_id) throws courseNotFoundException {
 
         return ResponseEntity.status(HttpStatus.OK).body(courseService.get_course_byId(course_id));
     }

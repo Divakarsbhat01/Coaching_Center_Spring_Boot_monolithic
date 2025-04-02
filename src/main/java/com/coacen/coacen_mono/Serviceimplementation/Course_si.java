@@ -6,8 +6,13 @@ import com.coacen.coacen_mono.Repository.Course_Repository;
 import com.coacen.coacen_mono.Schemas.Course_Return;
 import com.coacen.coacen_mono.Service.Course_Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +21,11 @@ public class Course_si implements Course_Service
 {
     @Autowired
     Course_Repository courseRepository;
+
+    @CacheEvict(value = {"listOfCourseById","listOfAllCourses"},allEntries = true)
     @Override
     public Course_Return create_course(Course course)
     {
-
         Course x=courseRepository.save(course);
         Course_Return cr=new Course_Return();
         cr.setCourse_name(x.getCourse_name());
@@ -29,18 +35,22 @@ public class Course_si implements Course_Service
         return cr;
     }
 
+    @Cacheable(value = "listOfAllCourses")
     @Override
-    public List<Course> get_all_courses()
+    public List<Course_Return> get_all_courses()
     {
 
-        return courseRepository.findAll();
+        return courseRepository.get_all_courses();
     }
 
+    @Cacheable(value = "listOfCourseById")
+    @Transactional
     @Override
-    public Optional<Course> get_course_byId(int courseId) throws courseNotFoundException {
+    public Course_Return get_course_byId(int courseId) throws courseNotFoundException {
         if(courseRepository.findById(courseId).isPresent())
         {
-            return courseRepository.findById(courseId);
+            Course_Return cr=new Course_Return(courseRepository.findById(courseId).get());
+            return cr;
         }
         else
         {
@@ -48,8 +58,11 @@ public class Course_si implements Course_Service
         }
     }
 
+    @CachePut(value = {"listOfCourseById","listOfAllCourses"})
+    @Transactional
     @Override
-    public Course_Return update_course_by_id(int courseId, Course course) throws Exception {
+    public Course_Return update_course_by_id(int courseId, Course course) throws Exception
+    {
         if(courseRepository.findById(courseId).isPresent())
         {
             Course x=courseRepository.getReferenceById(courseId);
@@ -67,6 +80,8 @@ public class Course_si implements Course_Service
         }
     }
 
+    @CacheEvict(value = {"listOfCourseById","listOfAllCourses"},allEntries = true)
+    @Transactional
     @Override
     public Boolean delete_parent_by_id(int courseId) {
         if (courseRepository.findById(courseId).isPresent())

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Course_Return
 {
     private String course_name;
@@ -24,6 +23,12 @@ public class Course_Return
         this.course_credit=x.getCourse_credit();
         this.course_desc=x.getCourse_desc();
         this.course_id=x.getCourse_id();
-
+    }
+    public Course_Return(String course_name,String course_desc,int course_credit,int course_id)
+    {
+        this.course_name=course_name;
+        this.course_desc=course_desc;
+        this.course_credit=course_credit;
+        this.course_id=course_id;
     }
 }

@@ -7,6 +7,9 @@ import com.coacen.coacen_mono.Repository.Course_Material_Repository;
 import com.coacen.coacen_mono.Schemas.Course_Material_return;
 import com.coacen.coacen_mono.Service.Course_Material_Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +22,7 @@ public class Course_Material_si implements Course_Material_Service
     @Autowired
     Course_Material_Repository courseMaterialRepository;
 
-    @Transactional
+    @CacheEvict(value={"listOfCourseMaterialById","listOfAllCoursesMaterial"},allEntries = true)
     @Override
     public Course_Material_return create_course(Course_Material courseMaterial)
     {
@@ -28,12 +31,15 @@ public class Course_Material_si implements Course_Material_Service
         return cmr;
     }
 
+    @Cacheable(value="listOfAllCoursesMaterial")
     @Override
     public List<Course_Material_return> get_all_courses()
     {
         return courseMaterialRepository.return_all_coursematerials();
     }
 
+    @Cacheable(value="listOfCourseMaterialById")
+    @Transactional
     @Override
     public Course_Material_return get_course_byId(int courseMaterialId) throws courseMaterialNotFoundException {
         if(courseMaterialRepository.findById(courseMaterialId).isPresent())
@@ -47,6 +53,8 @@ public class Course_Material_si implements Course_Material_Service
         }
     }
 
+    @CachePut(value = {"listOfCourseMaterialById","listOfAllCoursesMaterial"})
+    @Transactional
     @Override
     public Course_Material_return update_course_material_by_id(int courseMaterialId, Course_Material courseMaterial) throws Exception {
         if(courseMaterialRepository.findById(courseMaterialId).isPresent())
@@ -65,7 +73,9 @@ public class Course_Material_si implements Course_Material_Service
         }
     }
 
+    @Transactional
     @Override
+    @CacheEvict(value={"listOfCourseMaterialById","listOfAllCoursesMaterial"},allEntries = true)
     public Boolean delete_parent_by_id(int courseMaterialId)
     {
         if (courseMaterialRepository.findById(courseMaterialId).isPresent())
