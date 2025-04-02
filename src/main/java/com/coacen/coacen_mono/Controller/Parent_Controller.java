@@ -18,6 +18,7 @@ public class Parent_Controller
 {
     @Autowired
     Parent_Service parentService;
+
     @PostMapping("/create_parent")
     public ResponseEntity<Parent> create_parent(@RequestBody Parent parent)
     {
@@ -29,6 +30,7 @@ public class Parent_Controller
     {
         return ResponseEntity.status(HttpStatus.OK).body(parentService.get_all_parents());
     }
+
     @GetMapping("/parents_by_id/{id}")
     public ResponseEntity<Optional<Parent>> get_all_parents(@PathVariable ("id") int parent_id) throws parentNotFoundException {
 
