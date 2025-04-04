@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS Teacher_Course
 (
-    teacher_id INT NOT NULL PRIMARY KEY,
-    course_id Int NOT NULL
+   tcID INT NOT NULL PRIMARY KEY,
+   FOREIGN KEY (teacherId) REFERENCES Teacher(teacher_id),
+   FOREIGN KEY (courseId) REFERENCES Course(course_id)
 );

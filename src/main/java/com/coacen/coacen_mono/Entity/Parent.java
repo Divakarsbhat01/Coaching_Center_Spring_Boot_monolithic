@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,11 @@ public class Parent
     private String parent_last_name;
     private String parent_email;
     private String parent_mobile;
+
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     private int parent_id;
+
+    @OneToMany(mappedBy = "parent")
+    Set<Student> student;
 }

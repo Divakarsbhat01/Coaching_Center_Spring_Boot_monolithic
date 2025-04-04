@@ -18,14 +18,16 @@ public class Course
     private String course_name;
     private String course_desc;
     private int course_credit;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int course_id;
 
+    @OneToMany(mappedBy = "course")
+    Set<Student_Course> stcuc;
 
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.MERGE)
-    private Set<Student>students;
+    @OneToMany(mappedBy = "course")
+    Set<Teacher_Course> tecuc;
 
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.MERGE)
-    private Set<Teacher>teachers;
+
 }

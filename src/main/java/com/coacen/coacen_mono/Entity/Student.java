@@ -25,13 +25,12 @@ public class Student
     private String email_id;
     private int student_age;
     private int parent_id;
+
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id",insertable = false,updatable = false,referencedColumnName = "parent_id")
     private Parent parent;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
-    @JoinTable(name="Student_Course",
-    joinColumns = @JoinColumn(name="student_id"),
-    inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private Set<Course> courses;
+    @OneToMany(mappedBy = "student")
+    Set<Student_Course> stcus;
+
 }

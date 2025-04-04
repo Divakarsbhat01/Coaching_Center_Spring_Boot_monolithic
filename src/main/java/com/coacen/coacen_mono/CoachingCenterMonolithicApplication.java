@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class CoachingCenterMonolithicApplication
 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		SpringApplication.run(CoachingCenterMonolithicApplication.class, args);
 	}
 
