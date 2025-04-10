@@ -1,6 +1,7 @@
 package com.coacen.coacen_mono.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,11 @@ public class Course_Material
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     private int course_material_id;
+
+    @NotNull(message = "Course ID Required")
     private int course_id;
+
+    @NotNull(message = "Course URL Required")
     private String course_url;
 
     @ManyToOne(fetch = FetchType.LAZY)

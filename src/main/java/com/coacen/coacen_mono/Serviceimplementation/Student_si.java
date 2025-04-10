@@ -3,6 +3,7 @@ package com.coacen.coacen_mono.Serviceimplementation;
 import com.coacen.coacen_mono.Entity.Student;
 import com.coacen.coacen_mono.Error_Control.Exceptions.studentNotFoundException;
 import com.coacen.coacen_mono.Repository.Student_Repository;
+import com.coacen.coacen_mono.Schemas.StudentList;
 import com.coacen.coacen_mono.Schemas.Student_return;
 import com.coacen.coacen_mono.Service.Student_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class Student_si implements Student_Service
@@ -91,5 +91,10 @@ public class Student_si implements Student_Service
         else {
             return Boolean.FALSE;
         }
+    }
+
+    public List<StudentList> abcdef()
+    {
+        return studentRepository.abcd();
     }
 }

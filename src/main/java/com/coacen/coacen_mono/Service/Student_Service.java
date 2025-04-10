@@ -2,6 +2,7 @@ package com.coacen.coacen_mono.Service;
 
 import com.coacen.coacen_mono.Entity.Student;
 import com.coacen.coacen_mono.Error_Control.Exceptions.studentNotFoundException;
+import com.coacen.coacen_mono.Schemas.StudentList;
 import com.coacen.coacen_mono.Schemas.Student_return;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,5 @@ public interface Student_Service{
     Student_return update_student_by_id(int studentId, Student student) throws Exception;
 
     Boolean delete_student_by_id(int studentId);
+    public List<StudentList> abcdef();
 }

@@ -4,6 +4,7 @@ import com.coacen.coacen_mono.Entity.Parent;
 import com.coacen.coacen_mono.Error_Control.Exceptions.parentNotFoundException;
 import com.coacen.coacen_mono.Schemas.parent_return;
 import com.coacen.coacen_mono.Service.Parent_Service;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class Parent_Controller
     Parent_Service parentService;
 
     @PostMapping("/create_parent")
-    public ResponseEntity<Parent> create_parent(@RequestBody Parent parent)
+    public ResponseEntity<Parent> create_parent(@Valid @RequestBody Parent parent)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(parentService.create_parent(parent));
     }
@@ -37,7 +38,7 @@ public class Parent_Controller
         return ResponseEntity.status(HttpStatus.OK).body(parentService.get_parent_byId(parent_id));
     }
     @PutMapping("/update_parent/{id}")
-    public ResponseEntity<Parent> update_parent_by_id(@PathVariable ("id") int parent_id,@RequestBody Parent parent) throws Exception
+    public ResponseEntity<Parent> update_parent_by_id(@Valid @PathVariable ("id") int parent_id,@RequestBody Parent parent) throws Exception
     {
         return ResponseEntity.status(HttpStatus.OK).body(parentService.update_parent_by_id(parent_id,parent));
     }

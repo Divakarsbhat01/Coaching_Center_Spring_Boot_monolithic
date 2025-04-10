@@ -4,6 +4,7 @@ import com.coacen.coacen_mono.Entity.Course;
 import com.coacen.coacen_mono.Error_Control.Exceptions.courseNotFoundException;
 import com.coacen.coacen_mono.Schemas.Course_Return;
 import com.coacen.coacen_mono.Service.Course_Service;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class Course_Controller
     @Autowired
     Course_Service courseService;
     @PostMapping("/create_course")
-    public ResponseEntity<Course_Return> create_course(@RequestBody Course course)
+    public ResponseEntity<Course_Return> create_course(@Valid @RequestBody Course course)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.create_course(course));
     }
@@ -35,7 +36,7 @@ public class Course_Controller
         return ResponseEntity.status(HttpStatus.OK).body(courseService.get_course_byId(course_id));
     }
     @PutMapping("/update_course/{id}")
-    public ResponseEntity<Course_Return> update_course_by_id(@PathVariable ("id") int course_id, @RequestBody Course course) throws Exception {
+    public ResponseEntity<Course_Return> update_course_by_id(@Valid @PathVariable ("id") int course_id, @RequestBody Course course) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.update_course_by_id(course_id,course));
     }
     @DeleteMapping("/delete_course/{id}")

@@ -3,6 +3,7 @@ package com.coacen.coacen_mono.Controller;
 import com.coacen.coacen_mono.Error_Control.Exceptions.teacherNotFoundException;
 import com.coacen.coacen_mono.Schemas.Teacher_return;
 import com.coacen.coacen_mono.Service.Teacher_Service;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class Teacher_Controller
     @Autowired
     Teacher_Service teacherService;
     @PostMapping("/create_teacher")
-    public ResponseEntity<Teacher_return> create_teacher(@RequestBody Teacher teacher)
+    public ResponseEntity<Teacher_return> create_teacher(@Valid @RequestBody Teacher teacher)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(teacherService.create_teacher(teacher));
     }
@@ -35,7 +36,7 @@ public class Teacher_Controller
         return ResponseEntity.status(HttpStatus.OK).body(teacherService.get_teacher_byId(teacher_id));
     }
     @PutMapping("/update_teacher/{id}")
-    public ResponseEntity<Teacher_return> update_teacher_by_id(@PathVariable ("id") int teacher_id, @RequestBody Teacher teacher) throws Exception {
+    public ResponseEntity<Teacher_return> update_teacher_by_id(@Valid @PathVariable ("id") int teacher_id, @RequestBody Teacher teacher) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(teacherService.update_teacher_by_id(teacher_id,teacher));
     }
     @DeleteMapping("/delete_teacher/{id}")
