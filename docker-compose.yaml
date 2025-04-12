@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_USER: admin
+      MYSQL_DATABASE: coaching_center_springboot_monolithic
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+    networks:
+      - javaNetwork
+    ports:
+      - 3306:3306
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ,"-u","root","-p","password" ]
+      timeout: 20s
+      retries: 10
+
+  coacen:
+    image: javaapp
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/coaching_center_springboot_monolithic
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - javaNetwork
+    depends_on:
+      db:
+        condition: service_healthy
+
+networks:
+  javaNetwork:

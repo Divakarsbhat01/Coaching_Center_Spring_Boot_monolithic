@@ -8,11 +8,6 @@ spring:
     baseline-on-migrate: 'true'
   application:
     name: Coaching_Center_monolithic
-  data:
-    mongodb:
-      port: '27017'
-      host: localhost
-      database: users_sb
   jpa:
     hibernate:
       ddl-auto: update
