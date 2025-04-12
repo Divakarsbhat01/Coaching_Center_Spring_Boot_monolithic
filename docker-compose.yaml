@@ -12,6 +12,8 @@ services:
     ports:
       - 3306:3306
     restart: always
+    volumes:
+      - coacenmono:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ,"-u","root","-p","password" ]
       timeout: 20s
@@ -33,3 +35,5 @@ services:
 
 networks:
   javaNetwork:
+volumes:
+  coacenmono:
