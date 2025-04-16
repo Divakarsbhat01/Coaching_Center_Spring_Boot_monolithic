@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata: 
+    name: mysqlservice #to whom i should attach defined through labels in deployment file
+spec:
+    selector:
+      app: mysql
+    ports:
+      - protocol: TCP
+        port: 3306
+        targetPort: 3306
+        # expose service port 27017 to container port target port 27017

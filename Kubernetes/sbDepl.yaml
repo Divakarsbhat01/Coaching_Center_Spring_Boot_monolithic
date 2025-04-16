@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: springboot-depl
+    labels:
+        app: springboot
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: springboot
+    template: #pod Definition
+        metadata:
+            labels:
+                app: springboot
+        spec:
+            containers:
+            # pod blueprint: container name and image with version
+                - name: coacen
+                  image: divakarsbhat1/coacen_sb_mono:latest
+                  ports:
+                  - containerPort: 8080
+                  env:
+                    - name: SPRING_DATASOURCE_URL
+                      valueFrom :
+                        configMapKeyRef :
+                          name : springboot-configmap
+                          key : database_url
+                    
+                    - name: SPRING_DATASOURCE_USERNAME
+                      valueFrom :
+                        configMapKeyRef :
+                          name : springboot-configmap
+                          key : springboot_datasource_username
+
+                    - name: SPRING_DATASOURCE_PASSWORD
+                      valueFrom :
+                        configMapKeyRef :
+                          name : springboot-configmap
+                          key : springboot_datasource_password

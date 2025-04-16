@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+    name: springboot-configmap
+data:
+  database_url: jdbc:mysql://mysqlservice:3306/coaching_center_springboot_monolithic
+  springboot_datasource_username: admin
+  springboot_datasource_password: root

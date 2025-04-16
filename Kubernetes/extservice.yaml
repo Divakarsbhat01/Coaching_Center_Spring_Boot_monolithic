@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata: 
+    name: springboot-external-service #to whom i should attach defined through labels in deployment file
+spec:
+    selector:
+      app: springboot
+    type: LoadBalancer #assigns service external ip address so accepts external requests
+    ports:
+      - protocol: TCP
+        port: 8080
+        targetPort: 8080 #where container port listning
+        nodePort: 30000 #port where external ip will be open to put in browser range between 30000 to 32000
