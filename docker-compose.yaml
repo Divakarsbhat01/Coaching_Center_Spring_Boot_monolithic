@@ -13,11 +13,12 @@ services:
       - 3306:3306
     restart: always
     volumes:
-      - coacenmono:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ,"-u","root","-p","password" ]
-      timeout: 20s
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       retries: 10
+      interval: 3s
+      timeout: 30s
 
   coacen:
     image: divakarsbhat1/coacen_sb_mono:latest
@@ -32,8 +33,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
+ 
 networks:
   javaNetwork:
+     name: javaNetwork
 volumes:
-  coacenmono:
+  mysql-data:

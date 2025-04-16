@@ -21,7 +21,7 @@ pipeline {
             {
                 steps
                 {
-                    sh "mvn clean package -DskipTests=true -Dspring.profiles.active=dev"
+                    sh "mvn clean package -DskipTests=true -Dspring.profiles.active=prod"
                 }
             }
         stage("Dockerise Application")

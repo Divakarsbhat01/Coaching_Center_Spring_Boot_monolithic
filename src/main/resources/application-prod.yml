@@ -17,7 +17,7 @@ spring:
         default_schema: coaching_center_springboot_monolithic
         format_sql: 'true'
   datasource:
-    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
-    url: jdbc:mysql://localhost:3306/coaching_center_springboot_monolithic
+    url: jdbc:mysql://localhost:3306/coaching_center_springboot_monolithic?useSSL=false
+    username: root
+    password: password
