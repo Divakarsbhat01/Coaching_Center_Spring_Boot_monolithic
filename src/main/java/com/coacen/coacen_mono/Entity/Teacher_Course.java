@@ -1,6 +1,7 @@
 package com.coacen.coacen_mono.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +15,15 @@ import lombok.NoArgsConstructor;
 public class Teacher_Course
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="teacherCSequence",sequenceName = "teacherCSequence",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "teacherCSequence")
     private int tcID;
 
+    @Min(value = 1,message = "Teacher Id should not be less than 0")
     @NotNull(message = "Teacher ID Required")
     private int teacherId;
 
+    @Min(value = 1,message = "Course Id should not be less than 0")
     @NotNull(message = "Course ID Required")
     private int courseId;
 

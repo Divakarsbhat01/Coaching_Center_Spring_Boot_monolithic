@@ -19,15 +19,17 @@ import java.util.Set;
 public class Student
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="studentSequence",sequenceName = "studentSequence",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "studentSequence")
+    @Column(name = "student_id")
     private int student_id;
 
+    @Size(min = 2,message = "Student First Name Too Short")
     @NotNull(message = "Student First Name Required")
-    @Pattern(regexp ="/^[a-zA-Z ]*$/",message = "Student First Name shoudn't contain numbers")
     private String student_first_name;
 
+    @Size(min = 2,message = "Student Last Name Too Short")
     @NotNull(message = "Student Last Name Required")
-    @Pattern(regexp ="/^[a-zA-Z ]*$/",message = "Student Last Name shoudn't contain numbers")
     private String student_last_name;
 
     @Email(message = "Email Not Acceptable")
@@ -40,6 +42,7 @@ public class Student
     private int student_age;
 
     @NotNull(message = "Parent Id Shouldn't be Null")
+    @Column(name = "parent_id")
     private int parent_id;
 
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
